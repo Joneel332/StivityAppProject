@@ -1,3 +1,20 @@
+-- 1. Create the Database
+IF DB_ID('StivityDB') IS NULL
+BEGIN
+    CREATE DATABASE StivityDB;
+END
+GO
+
+-- 2. Switch to the Database
+USE StivityDB;
+GO
+
+-- 3. Create the Tables (Drop them first if they exist to start fresh)
+IF OBJECT_ID('Tasks', 'U') IS NOT NULL DROP TABLE Tasks;
+IF OBJECT_ID('ClassSchedules', 'U') IS NOT NULL DROP TABLE ClassSchedules;
+IF OBJECT_ID('Expenses', 'U') IS NOT NULL DROP TABLE Expenses;
+IF OBJECT_ID('Students', 'U') IS NOT NULL DROP TABLE Students;
+
 CREATE TABLE Students (
     StudentID INT IDENTITY(1,1) PRIMARY KEY,
     StudentNumber NVARCHAR(20) NOT NULL UNIQUE,
@@ -5,9 +22,6 @@ CREATE TABLE Students (
     PasswordHash NVARCHAR(255) NOT NULL,
     WeeklyAllowance DECIMAL(10, 2) NOT NULL DEFAULT 0
 );
-
-INSERT INTO Students (StudentNumber, FullName, PasswordHash, WeeklyAllowance)
-VALUES ('543210', 'Jerryme S. Tohoy', 'stivity123', 3000.00);
 
 CREATE TABLE Tasks (
     TaskID INT IDENTITY(1,1) PRIMARY KEY,
@@ -39,3 +53,6 @@ CREATE TABLE Expenses (
     Amount DECIMAL(10, 2) NOT NULL,
     ExpenseDate DATETIME NOT NULL DEFAULT GETDATE()
 );
+
+INSERT INTO Students (StudentNumber, FullName, PasswordHash, WeeklyAllowance)
+VALUES ('543210', 'Jerryme S. Tohoy', 'stivity123', 3000.00);
